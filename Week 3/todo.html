@@ -25,10 +25,11 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        h1 {
+        .todobig {
             font-size: 3em;
             margin-bottom: 20px;
             color: #00d1ff;
+            font-weight: 900;
         }
 
         #parent {
@@ -48,9 +49,9 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
         }
 
-        .item h4 {
+        .item div {
             margin: 0;
-            font-size: 1.2em;
+            font-size: 24px;
             color: #ffffff;
         }
 
@@ -103,7 +104,7 @@
 
 <body>
     <div class="container">
-        <h1>TODO LIST</h1>
+        <div class="todobig">TODO LIST</div>
         <div id="parent"></div>
         <div>
             <input type="text"></input>
@@ -125,7 +126,7 @@
             newEl.className = "item"
             newEl.id = "todo-" + newId
             newEl.innerHTML = `
-            <h4>${newId}. ${value}</h4>
+            <div>${newId}. ${value}</div>
             <button class ="delete" onclick="deletetodo(${newId})">Delete</button>`
             parEl.appendChild(newEl)
             document.querySelector("input").value=""
