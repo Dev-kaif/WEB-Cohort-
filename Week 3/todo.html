@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO LIST</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #322e2e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #00d1ff;
+        }
+
+        #parent {
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1e1e1e;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .item h4 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #ffffff;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 250px;
+            margin-right: 10px;
+            background-color: #333;
+            color: #ffffff;
+            border: 2px solid #00d1ff;
+            border-radius: 5px;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            background-color: #444;
+        }
+
+        input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .delete {
+            background-color: red;
+        }
+
+        .delete:hover {
+            background-color: rgb(181, 22, 22);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>TODO LIST</h1>
+        <div id="parent"></div>
+        <div>
+            <input type="text"></input>
+            <button onclick="add()">Add Todo</button>
+        </div>
+    </div>
+    <script>
+        function deletetodo(index){
+            const element = document.getElementById("todo-"+ index)
+            element.parentNode.removeChild(element)
+        }
+        function add(){
+            let value = document.querySelector("input").value
+            if(value == "") 
+                return;
+            let parEl = document.getElementById("parent")
+            let newEl = document.createElement("div")
+            let newId = parEl.children.length + 1 ; 
+            newEl.className = "item"
+            newEl.id = "todo-" + newId
+            newEl.innerHTML = `
+            <h4>${newId}. ${value}</h4>
+            <button class ="delete" onclick="deletetodo(${newId})">Delete</button>`
+            parEl.appendChild(newEl)
+            document.querySelector("input").value=""
+        }
+        
+    </script>
+</body>
+</html>
