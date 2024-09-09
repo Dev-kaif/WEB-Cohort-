@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+            background-color: #121212;
+        }
+
+        .container {
+            background-color: #262222;
+            padding: 50px;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        h4 {
+            text-align: center;
+            font-size: 5em;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+
+        button {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: #006aff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #0096ff;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>StopWatch</h1>
+        <div>
+            <h4 id="counterDisplay">0</h4>
+            <button id="startButton" onclick="start()">Start</button>
+            <button id="stopButton" onclick="stop()" disabled>Stop</button>
+            <button onclick="reset()">Reset</button>
+        </div>
+    </div>
+    <script>
+        let intervalId;
+        let counter = 0;
+        const counterDisplay = document.getElementById("counterDisplay");
+        const startButton = document.getElementById("startButton");
+        const stopButton = document.getElementById("stopButton");
+
+        function updateDisplay() {
+            counterDisplay.innerHTML = counter;
+        }
+
+        function start() {
+            if (!intervalId) {
+                intervalId = setInterval(() => {
+                    counter++;
+                    updateDisplay();
+                }, 1000);
+                startButton.disabled = true;
+                stopButton.disabled = false;
+            }
+        }
+
+        function stop() {
+            clearInterval(intervalId);
+            intervalId = null;
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        }
+
+        function reset() {
+            stop(); 
+            counter = 0;
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
