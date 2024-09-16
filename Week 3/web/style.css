@@ -1,0 +1,256 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    background-color: #000;
+    font-family: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+#minicircle{
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    z-index: 999999;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.bounding {
+    width: fit-content;
+    overflow: hidden;
+}
+.boundingelem{
+    transform: translateY(100%)
+}
+
+body, #main {
+    width: 100%;
+    height: 100%;
+}
+
+#hero {
+    width: 100%;
+    height: 100vh;
+    color: white;
+    position: relative;
+}
+
+#nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 43px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+#nav a {
+    font-size: 18px;
+    text-decoration: none;
+    color: white;
+}
+
+.heading {
+    margin-top: 7vw;
+    padding: 0 43px;
+    font-size: 10.42vw;
+    font-weight: 500;
+    color: #a3a3a3;
+}
+
+.heading div {
+    margin-bottom: 0;
+    line-height: 0.8;
+}
+
+#des {
+    margin: 0.5vw 0 0 168px;
+}
+
+.block {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+#small {
+    font-size: 16px;
+    color: white;
+    margin-top: 28px;
+}
+
+.litilehead {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: end;
+    margin-top: 50px;
+    padding-right: 43px;
+    font-weight: 400;
+}
+
+.bottom {
+    font-weight: 500;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 3%;
+    position: absolute;
+    padding: 0 43px;
+    box-sizing: border-box;
+}
+
+.bottom a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#gol {
+    display: flex;
+    gap: 5px; 
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #a3a3a3;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer; 
+}
+
+.circle i {
+    background-color: transparent;
+    color: black;
+    font-weight: 500;
+}
+
+.second{
+    width: 100%;
+    height: 100vh;
+    padding-top: 200px;
+    padding-right: 10vw;
+    color: #a3a3a3;
+    
+}
+
+.elem{
+    width: 100%;
+    border-top: 1px solid #a3a3a3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.elem div{
+    font-size: 7vw;
+    font-weight: 900;
+    padding-bottom: 3.26vw;
+    padding: 3.5vw 3vw;
+    opacity: 0.7;
+}
+
+.elem {
+    color: white;
+    font-weight: 900;
+}
+
+.elemlast{
+    border-bottom: 1px solid #a3a3a3;
+}
+
+.elem img{
+    z-index: 999;
+    position: absolute;
+    height: 140%;
+    display: none;
+}
+
+.about {
+    width: 100%;
+    padding: 10vw 10vw;
+    color: white;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    gap: 50px;
+    padding-left: 40vw;
+    margin-top: 300px;
+}
+
+.about img{
+    width:15vw;
+}
+#aboutme{
+    opacity: 0.7;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.textabout{
+    width: 28rem;
+}
+#para{
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+.about button{
+    color: white;
+    font-weight:500 ;
+    border: 2px solid white;
+    border-radius: 80px;
+    margin-top: 20px;
+    padding: 5px 20px;
+    font-size: 16px;
+}
+
+.subscribe{
+    color: white;
+    font-weight:500;
+    padding: 20px 30px;
+    padding-right: 43px;
+    padding-bottom: 7vw;
+}
+
+.subscribe div{
+    font-size: 14px;
+    opacity: 0.7;
+}
+.subscribe a{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.footer{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 43px;
+}
+.footerleft{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+.footerright{
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+.footerright a{
+    text-decoration: none;
+    color: white;
+}
