@@ -19,6 +19,7 @@
 .bounding {
     width: fit-content;
     overflow: hidden;
+    
 }
 .boundingelem{
     transform: translateY(100%)
@@ -285,4 +286,37 @@ body, #main {
 
 .underline:hover::after {
     transform: translateX(0);
+}
+
+.dropdown{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.dropdown .underline {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.dropdown .underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.dropdown .underline:hover::after {
+    transform: translateX(0);
+}
+
+.dropi{
+    transform: translateY(100%)
 }
