@@ -109,3 +109,23 @@ function addUnderlineClass(selector) {
 }
 
 addUnderlineClass(".under");
+
+
+function updateTime() {
+    const now = new Date();
+    const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Asia/Kolkata', // Adjust to your time zone
+        hour12: true
+    };
+    const timeString = now.toLocaleTimeString('en-US', options);
+    
+
+    document.getElementById('time').textContent = `${timeString} IST`;
+}
+
+// Update time immediately and then every second
+updateTime();
+setInterval(updateTime, 1000);
+
