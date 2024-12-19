@@ -11,7 +11,7 @@ program
 program
   .command("add")
   .description("Add a new task to the TODO list")
-  .argument("<todo>", "Task to add")
+  .argument("<task>", "Task to add")
   .action((todo) => {
     fs.appendFile("todo.txt", todo + "\n", "utf8", (err) => {
       if (err) {
