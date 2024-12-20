@@ -13,7 +13,9 @@ function ageCheckerMiddleware(req, res, next) {
   }
 }
 
-// put a middleware in series format "rout => middelware => function" (function is also like a middleware)
+// Middleware in Express follows a "route => middleware => function" sequence
+// In this sequence, the function acts like a middleware as well
+// Express syntax is essentially a series of middleware functions executed in order
 
 app.get("/ride1", ageCheckerMiddleware, function (req, res) {
   res.json({

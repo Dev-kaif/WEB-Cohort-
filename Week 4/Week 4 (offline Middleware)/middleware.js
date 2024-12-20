@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
 
+// Middleware is a function that runs before the main request handler
+// It has access to the request (req), response (res), and the next function
+// The 'next' function is used to pass control to the next middleware in the stack
+
+
 //function that returns boolen
 function agecheaker(age) {
   if (age >= 14) {

@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 
-// Middleware to parse JSON body
+
+// Middleware to parse incoming JSON data
+// In Express, before sending or processing JSON data in the request body,
+// you need to use this middleware to parse it into a JavaScript object
+// Parsing means converting data from one format to another 
+
 app.use(express.json());
 
 let todos = [];

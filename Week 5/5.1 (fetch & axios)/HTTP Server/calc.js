@@ -1,8 +1,13 @@
 const express = require("express");
 const app = express();
 const cors = require('cors');
-app.use(cors());
 
+// Enable Cross-Origin Resource Sharing (CORS) {typically disabled by default}
+// CORS is a security feature implemented by browsers to restrict resource sharing between different domains
+// By default, browsers block requests from one domain to another to prevent security issues (Same-Origin Policy)
+// Using CORS, we explicitly allow the frontend and backend, typically hosted on different domains, to communicate
+
+app.use(cors());
 
 app.get("/multiply", function (req, res) {
     let a = Number(req.query.a);
