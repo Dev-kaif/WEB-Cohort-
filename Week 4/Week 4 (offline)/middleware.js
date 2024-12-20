@@ -7,7 +7,7 @@ function agecheaker(age) {
     return true;
   } else {
     return false;
-  }
+  } 
 }
 
 app.get("/ride1", function (req, res) {
