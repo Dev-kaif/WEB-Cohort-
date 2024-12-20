@@ -20,6 +20,16 @@ app.get("/add", function (req, res) {
     res.json({ a: a, b: b, operation: "add", output: a + b });
 });
 
+// By adding ":" in front of a path segment (e.g., ":a" and ":b"), 
+// we define dynamic route parameters. These can be accessed 
+// using `req.params` as key-value pairs, where the key is the parameter name.
+
+app.get("/addDynamic/:a/:b", function (req, res) {
+    let a = parseInt(req.params.a);
+    let b = parseInt(req.params.b);
+    res.json({ a: a, b: b, operation: "add", output: a + b });
+});
+
 app.get("/sub", function (req, res) {
     let a = Number(req.query.a);
     let b = Number(req.query.b);
