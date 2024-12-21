@@ -7,7 +7,13 @@ const cors = require('cors');
 // By default, browsers block requests from one domain to another to prevent security issues (Same-Origin Policy)
 // Using CORS, we explicitly allow the frontend and backend, typically hosted on different domains, to communicate
 
-app.use(cors());
+// app.use(cors());
+
+// if you dont want to use cors lib , we can just host both froentend and backend in the same domain 
+
+app.get('/', function(req, res){
+    res.sendFile(__dirname+"/index.html");
+})
 
 app.get("/multiply", function (req, res) {
     let a = Number(req.query.a);
