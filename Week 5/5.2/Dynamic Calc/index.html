@@ -113,7 +113,7 @@
         const val1 = document.getElementById("val1").value;
         const val2 = document.getElementById("val2").value;
         const operation = document.getElementById("operation").value;
-        let response = await axios.post(`http://localhost:3000/`, { a: val1, b: val2 ,operation: operation})
+        let response = await axios.post(`http://localhost:3000/api`, { a: val1, b: val2 ,operation: operation})
         document.getElementById("output").innerText = response.data.output;
       }
     </script>
