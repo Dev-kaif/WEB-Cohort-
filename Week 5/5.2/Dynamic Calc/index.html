@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
+      integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      body {
+        background-color: #1e1e2e;
+        color: #ffffff;
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .flex-row {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .input-box {
+        width: 100px;
+        height: 40px;
+        background-color: #2b2b40;
+        border: 2px solid #3f3f57;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 18px;
+        color: #f8d49d;
+        padding: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .card {
+        width: 100px;
+        height: 40px;
+        background-color: #2b2b40;
+        border: 2px solid #3f3f57;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: #cdd6f4;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .card:hover {
+        background-color: #44446a;
+        transform: translateY(-3px);
+      }
+
+      .output-box {
+        width: 320px;
+        height: 50px;
+        background-color: #2b2b40;
+        border: 2px solid #3f3f57;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .label {
+        color: #cdd6f4;
+        font-size: 18px;
+      }
+
+      #output {
+        color: #f8d49d;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="flex-row">
+        <input id="val1" class="input-box" type="number" placeholder="Value 1" />
+        <input id="operation" class="input-box" placeholder="operation" />
+        <input id="val2" class="input-box" type="number" placeholder="Value 2" />
+        <button class="card" onclick="sendReq()">Calculate</button>
+      </div>
+      <div class="output-box">
+        <span class="label">Output: </span>
+        <span id="output">0</span>
+      </div>
+    </div>
+
+    <script>
+      async function sendReq() {
+        const val1 = document.getElementById("val1").value;
+        const val2 = document.getElementById("val2").value;
+        const operation = document.getElementById("operation").value;
+        let response = await axios.post(`http://localhost:3000/`, { a: val1, b: val2 ,operation: operation})
+        document.getElementById("output").innerText = response.data.output;
+      }
+    </script>
+  </body>
+</html>
