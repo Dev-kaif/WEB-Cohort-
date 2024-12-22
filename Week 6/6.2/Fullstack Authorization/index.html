@@ -291,7 +291,9 @@
       }
 
       function logout() {
-        localStorage.clear();
+        // Can use both clear or remove item function
+        //localStorage.clear();
+        localStorage.removeItem("token")
         location.reload();
       }
     </script>
