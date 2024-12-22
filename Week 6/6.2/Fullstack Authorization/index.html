@@ -21,17 +21,28 @@
         font-family: Arial, sans-serif;
         background-color: #121212;
         color: #e0e0e0;
+        max-height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10vw;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .cona {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 20px;
       }
 
       .container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
         flex-direction: column;
       }
 
@@ -90,14 +101,13 @@
         background-color: #357abd;
       }
 
-      footer-text {
+      .footer-text {
         text-align: center;
         font-size: 14px;
         color: #b0b0b0;
-        background: #ffffff;
       }
 
-      footer-text p {
+      .footer-text p {
         padding: 10px;
         background-color: #333;
         border-radius: 5px;
@@ -114,145 +124,176 @@
         border-radius: 5px;
       }
 
-      footer-text {
+      .footer-text {
         text-align: center;
         color: #b0b0b0;
+      }
+
+      /* Fix for center alignment of form containers */
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      /* Ensure that the logout button is styled properly */
+      #logout {
+        text-align: center;
+        margin-top: 20px;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="form-container">
-        <h1>Sign up</h1>
-        <form action="#">
-          <div class="input-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="newEmail"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="newPassword"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          <button onclick="signup()" type="submit" class="btn">Sign up</button>
-          <p class="footer-text" id="up-response"></p>
-        </form>
+    <div class="cona">
+      <div class="container">
+        <div class="form-container">
+          <h1>Sign up</h1>
+          <form action="#">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="newEmail"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button onclick="signup()" type="submit" class="btn">
+              Sign up
+            </button>
+            <p class="footer-text" id="up-response"></p>
+          </form>
+        </div>
+      </div>
+      <div class="container">
+        <div class="form-container">
+          <h1>Sign In</h1>
+          <form action="#">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button onclick="signin()" type="submit" class="btn">
+              Sign In
+            </button>
+            <p class="footer-text" id="in-response"></p>
+          </form>
+        </div>
+      </div>
+      <div class="container">
+        <div class="form-container">
+          <h1>Get Your Info</h1>
+          <form action="#">
+            <div class="input-group">
+              <label for="email">Email</label>
+              <p class="input" id="getEmail"></p>
+            </div>
+            <div class="input-group">
+              <label for="password">Password</label>
+              <p class="input" id="getPass"></p>
+            </div>
+            <button onclick="getinfo()" type="submit" class="btn">Get</button>
+            <p class="footer-text" id="get-response"></p>
+          </form>
+        </div>
       </div>
     </div>
-    <div class="container">
-      <div class="form-container">
-        <h1>Sign In</h1>
-        <form action="#">
-          <div class="input-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          <button onclick="signin()" type="submit" class="btn">Sign In</button>
-          <p class="footer-text" id="in-response"></p>
-        </form>
-      </div>
-    </div>
-    <div class="container">
-      <div class="form-container">
-        <h1>Get Your Info</h1>
-        <form action="#">
-          <div class="input-group">
-            <label for="email">Email</label>
-            <p class="input" id="getEmail"></p>
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <p class="input" id="getPass"></p>
-          </div>
-          <button onclick="getinfo()" type="submit" class="btn">Get</button>
-        </form>
-      </div>
-    </div>
-
+    <div id="logout"></div>
     <script>
-
       async function signup() {
         // Get the email and password entered by the user
         const email = document.getElementById("newEmail").value;
         const password = document.getElementById("newPassword").value;
-    
+
         try {
           // Make a POST request to the server to create a new account
           const response = await axios.post("http://localhost:3000/signup", {
             username: email,
             password: password,
           });
-    
-          document.getElementById("up-response").innerHTML = response.data.message;
 
+          document.getElementById("up-response").innerHTML =
+            response.data.message;
         } catch (error) {
           // If an error occurs (e.g., invalid input or server issues), display the error message
-          document.getElementById("up-response").innerHTML = error.response.data.message;
+          document.getElementById("up-response").innerHTML =
+            error.response.data.message;
         }
       }
-    
-      async function signin() {
 
+      async function signin() {
         // Get the email and password entered by the user
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-    
-        try {
 
+        try {
           // Make a POST request to the server to authenticate the user
           const response = await axios.post("http://localhost:3000/signin", {
             username: email,
             password: password,
           });
-    
+
           // Display success message from the server response
-          document.getElementById("in-response").innerHTML = response.data.message;
-    
+          document.getElementById("in-response").innerHTML =
+            response.data.message;
+          document.getElementById("logout").innerHTML =
+            '<button class="btn" onclick="logout()" >Logout</button>';
           // Store the received token in localStorage for future requests
           localStorage.setItem("token", response.data.token);
         } catch (error) {
-          document.getElementById("in-response").innerHTML = error.response.data.message;
-
+          document.getElementById("in-response").innerHTML =
+            error.response.data.message;
         }
       }
-    
+
       // Function to retrieve user information
       async function getinfo() {
         // Make a GET request to the server to fetch user details, passing the token in the headers
-        const response = await axios.get("http://localhost:3000/me", {
-          headers: {
-            token: localStorage.getItem("token"), // Retrieve the token from localStorage
-          },
-        });
-    
-        // Display the user data retrieved from the server
-        document.getElementById("getEmail").innerText = response.data.username;
-        document.getElementById("getPass").innerText = response.data.password;
+        try {
+          const response = await axios.get("http://localhost:3000/me", {
+            headers: {
+              token: localStorage.getItem("token"), // Retrieve the token from localStorage
+            },
+          });
+
+          // Display the user data retrieved from the server
+          document.getElementById("getEmail").innerText =
+            response.data.username;
+          document.getElementById("getPass").innerText = response.data.password;
+        } catch (error) {
+          document.getElementById("get-response").innerText =
+            error.response.data.message;
+        }
+      }
+
+      function logout() {
+        localStorage.clear();
+        location.reload();
       }
     </script>
-    
   </body>
 </html>
