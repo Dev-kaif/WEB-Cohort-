@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
+      integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <h1>Sign up</h1>
+        <form action="#">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="newEmail"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="newPassword"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button onclick="signup()" type="submit" class="btn">Sign up</button>
+          <p class="footer-text" id="up-response"></p>
+        </form>
+      </div>
+    </div>
+    <div class="container">
+      <div class="form-container">
+        <h1>Sign In</h1>
+        <form action="#">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button onclick="signin()" type="submit" class="btn">Sign In</button>
+          <p class="footer-text" id="in-response"></p>
+        </form>
+      </div>
+    </div>
+    <div class="container">
+      <div class="form-container">
+        <h1>Get Your Info</h1>
+        <form action="#">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <p class="input" id="getEmail"></p>
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <p class="input" id="getPass"></p>
+          </div>
+          <button onclick="getinfo()" type="submit" class="btn">Get</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+        let token = null;
+
+        async function signup() {
+            const email = document.getElementById("newEmail").value;
+            const password = document.getElementById("newPassword").value;
+
+            try {
+                const response = await axios.post("http://localhost:3000/signup", {
+                username: email,
+                password: password,
+                });
+
+                document.getElementById("up-response").innerHTML = response.data.message;
+            } catch (error) {
+
+                // Display error message if status code is 400 or other non-2xx codes
+                console.log(error.response);
+                document.getElementById("up-response").innerHTML = error.response.data.message;
+
+            }
+        }
+
+        async function signin(){
+            const email = document.getElementById("email").value 
+            const password = document.getElementById("password").value 
+
+            const response = await axios.post("http://localhost:3000/signin",{
+                username:email,
+                password:password
+            })
+
+            document.getElementById("in-response").innerHTML= response.data.message;
+            token = response.data.token;
+        }
+        async function getinfo(){
+
+            const response = await axios.get("http://localhost:3000/me",{
+              headers:{
+                "token":token
+              }
+            })
+
+            document.getElementById("getEmail").innerText= response.data.username;
+            document.getElementById("getPass").innerText= response.data.password;
+            token = response.data.token;
+        }
+        
+    </script>
+  </body>
+</html>
