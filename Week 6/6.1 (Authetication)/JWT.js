@@ -1,9 +1,23 @@
-// Tokens traditionally require repeated requests to the database for user authentication,such as verifying the username and password.
-// Tokens are "stateful" because they need to be stored in a database, while JWTs (JSON Web Tokens) are "stateless," meaning they don’t require storage in a database.
-// To avoid repetitive database queries, we use JWTs, which encode user information within the token itself.
-// This information, such as the username, is securely encoded and signed within the JWT.
-// JWTs reduce the load on the database by eliminating frequent authorization requests.
-// Using JWTs also avoids the need for a round trip to the backend server and database for each request.
+// Traditional tokens require repeated requests to the database for user authentication, 
+// like verifying the username and password. These tokens are "stateful" because 
+// the server needs to store session data in the database.
+
+
+// JWTs (JSON Web Tokens), on the other hand, are "stateless." 
+// They don’t require server-side storage because user information, like the username,
+// is embedded inside the token itself.
+
+// JWTs reduce the database workload by removing the need for repeated authorization queries. 
+// Once issued, the token can be verified directly using the secret key without consulting the database.
+
+// It’s important to understand that JWTs are signed, not encrypted. 
+// Signing ensures the data in the token is valid and hasn’t been altered. 
+// while anyone can decode the token to see the information it contains.
+
+// A real-world equivalent of signing is a signature. Anyone can see or verify the signature,
+// but only the creator of the signature can produce it authentically.
+
+// This method avoids unnecessary trips to the backend and database for every request,making the system more efficient and scalable.
 
 const express = require("express");
 const app = express();
