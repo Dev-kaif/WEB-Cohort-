@@ -49,7 +49,7 @@ function auth(req, res, next) {
   const token = req.headers.token;
 
   if (!token) {
-    return res.status(401).json({ message: "Missing token" });
+    return res.status(401).json({ message: "please Sign-In " });
   }
 
   const verifiedToken = jwt.verify(token, JWT_SECRET);
