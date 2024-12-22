@@ -26,6 +26,7 @@ const app = express();
 // `JWT_SECRET` is a secret key used to sign and verify JWTs.
 // It ensures the token's integrity by generating a signature with a hashing algorithm (e.g., HS256).
 // The same secret key is used during verification to confirm that the token hasn’t been altered.
+// JWT key can be random , anything , dosnt matter 
 const JWT_SECRET = "WWJKCWKCWJN"; // Keep this key secure in a real application
 
 // Import the `jsonwebtoken` library for working with JWTs.
