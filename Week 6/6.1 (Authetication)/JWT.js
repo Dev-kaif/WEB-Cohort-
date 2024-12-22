@@ -12,10 +12,11 @@
 
 // It’s important to understand that JWTs are signed, not encrypted. 
 // Signing ensures the data in the token is valid and hasn’t been altered. 
-// while anyone can decode the token to see the information it contains.
+// Anyone can decode the token to see the information it contains.
+// But they cant, authenticate it or verify the token
 
 // A real-world equivalent of signing is a signature. Anyone can see or verify the signature,
-// but only the creator of the signature can produce it authentically.
+// but only the creator of the signature can produce it authentically and used by.
 
 // This method avoids unnecessary trips to the backend and database for every request,making the system more efficient and scalable.
 
