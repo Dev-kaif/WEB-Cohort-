@@ -1,3 +1,4 @@
+
 async function add() {
   let todo = document.getElementById("todo-input").value;
   
@@ -11,15 +12,34 @@ async function add() {
 
     document.getElementById(
       "todo-list"
-    ).innerHTML += `<div id="${response.data.id}" class="todo-item">
-      <div  id="fun_${response.data.id}">${response.data.todo}</div>
-    <div class="multi-btn">
+    ).innerHTML += `
+    <div id="${response.data.id}" class="todo-item">
+  <div class="todo-content">
+    <div class="custom-checkbox">
+      <input 
+        onclick="check('fun_${response.data.id}', ${response.data.id})" 
+        type="checkbox" 
+        id="check_${response.data.id}">
+       <label for="check_${response.data.id}" class="checkmark"></label>
+    </div>
+    <div id="fun_${response.data.id}">${response.data.todo}</div>
+  </div>
+  <div class="multi-btn">
     <div id="up_${response.data.id}">
-    <button onclick="edit('fun_${response.data.id}','up_${response.data.id}',${response.data.id})" class="update-btn">Edit</button>
+      <button 
+        onclick="edit('fun_${response.data.id}', 'up_${response.data.id}', ${response.data.id})" 
+        class="update-btn">
+        Edit
+      </button>
     </div>
-    <button onclick="del(${response.data.id})" class="delete-btn">✖</button>
-    </div>
-  </div>`;
+    <button 
+      onclick="del(${response.data.id})" 
+      class="delete-btn">
+      ✖
+    </button>
+  </div>
+</div>
+`;
 
     document.getElementById("message").innerText = response.data.message;
     setTimeout(() => {
@@ -81,4 +101,18 @@ async function update(id) {
     console.error('Error updating todo:', error);
     alert('There was an error updating the todo.');
   }
+}
+
+function check(id1,id2) {
+  const checkbox = document.getElementById(`check_${id2}`);
+  
+  checkbox.addEventListener('change', () => {
+    const element = document.getElementById(id1);
+    
+    if (checkbox.checked) {
+      element.className = "line-through-animation"
+    } else {
+      element.className = ""; 
+    }
+  });
 }

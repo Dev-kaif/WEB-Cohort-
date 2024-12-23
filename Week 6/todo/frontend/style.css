@@ -220,3 +220,71 @@ body {
   outline: none;
   box-shadow: 0 0 10px var(--neon-blue);
 }
+
+.todo-content{
+  display: flex;
+  gap:2vw;
+}
+
+.line-through-animation {
+  color:#dfdfdf9a ; /* Text color */
+  text-decoration: line-through; 
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+/* Checkbox container */
+.custom-checkbox {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Hide the default checkbox */
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+/* Style the visible checkbox */
+.custom-checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #f1f1f1;
+  border: 2px solid #ccc;
+  border-radius: 4px; /* Optional: Rounded corners */
+  transition: all 0.3s ease;
+}
+
+/* On hover, change the border color */
+.custom-checkbox:hover .checkmark {
+  border-color: #007bff;
+}
+
+/* When the checkbox is checked, style the checkmark */
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Add the checkmark symbol */
+.custom-checkbox .checkmark::after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when the checkbox is checked */
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  display: block;
+}
