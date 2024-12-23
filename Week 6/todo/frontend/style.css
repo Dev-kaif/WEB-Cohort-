@@ -1,0 +1,222 @@
+/* Root variables for colors and style */
+:root {
+  --bg-dark: #121212;
+  --card-dark: #1f1f1f;
+  --text-light: #ffffff;
+  --accent-color: #00ffc3; /* Bright greenish-blue */
+  --error-color: #ff4d4d; /* Vibrant red */
+  --hover-dark: #292929;
+  --primary-color: #4CAF50; /* Green */
+  --primary-dark: #388E3C; /* Darker green */
+  --glow-color: #ff99ff; /* Anime-inspired glow */
+  --neon-blue: #00b5e2; /* Neon blue accent */
+  --neon-pink: #ff00ff; /* Neon pink accent */
+}
+
+/* General body styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: radial-gradient(circle at top center, #1a1a1a, #121212);
+  overflow: hidden;
+}
+
+/* Container style for the todo app */
+.container {
+  width: 90%;
+  max-width: 500px;
+  background-color: var(--card-dark);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Title animation for a glowing effect */
+.app-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+  margin-bottom: 20px;
+  animation: glow 1.5s infinite alternate;
+}
+
+/* Glowing animation for the app title */
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+  }
+  100% {
+    text-shadow: 0 0 30px var(--neon-pink), 0 0 60px var(--neon-pink);
+  }
+}
+
+/* Styling for the todo form input field */
+.todo-form {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 2px solid #333;
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--hover-dark);
+  color: var(--text-light);
+  box-shadow: 0 0 10px var(--neon-blue);
+  transition: all 0.3s ease-in-out;
+}
+
+#todo-input:focus {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+
+/* Add button style with neon glow on hover */
+.add-btn {
+  background-color: var(--neon-blue);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 300%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+  transform: translateX(-50%) translateY(100%);
+}
+
+.add-btn:hover {
+  background-color: var(--neon-pink);
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.add-btn:hover::before {
+  transform: translateX(-50%) translateY(-100%);
+}
+
+/* Styling for the todo list items */
+#todo-list {
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background-color: var(--hover-dark);
+  margin-bottom: 15px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.todo-item:hover {
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.todo-item span {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.todo-item:hover span {
+  color: var(--neon-pink);
+}
+
+/* Multi-button container for edit and delete */
+.multi-btn {
+  display: flex;
+  gap: 15px;
+}
+
+.delete-btn {
+  background-color: var(--error-color);
+  color: var(--text-light);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.delete-btn::after {
+  content: '✖';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #ff3333;
+}
+
+.delete-btn:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.update-btn {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Editing input styling */
+#input-edit {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #555;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+#input-edit:focus {
+  border-color: var(--neon-blue);
+  background-color: #444;
+  outline: none;
+  box-shadow: 0 0 10px var(--neon-blue);
+}
