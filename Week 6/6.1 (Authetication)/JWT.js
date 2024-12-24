@@ -65,9 +65,6 @@ app.post("/signin", function (req, res) {
     // Generate a JWT with the user's username as the payload
     const token = jwt.sign({ username: FoundUser.username }, JWT_SECRET);
 
-    // Store the token in the user's object
-    FoundUser.token = token;
-
     res.json({ message: "Login successful", token: token });
   } else {
     return res.status(401).json({ error: "Invalid credentials" });
@@ -80,6 +77,7 @@ app.get("/me", function (req, res) {
 
   try {
     // Verify the token using the secret key
+    //if token is made with same key its validated otherwise invalidated
     const decodedToken = jwt.verify(token, JWT_SECRET);
 
     // Find the user based on the username in the decoded token
