@@ -3,6 +3,7 @@ const { UserModel, TodoModel } = require("./db");
 const { auth, JWT_SECRET } = require("./auth");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const { z } = require("zod");
 
 
 // bcrypt library is used to hash passwords securely and compare hashed passwords
@@ -15,13 +16,31 @@ const bcrypt = require('bcrypt');
 const saltRounds = 5;
 
 
-mongoose.connect("")
+mongoose.connect("mongodb+srv://kaifghalib123:HzxZg0906E5fQHe6@cluster0.mt9u1.mongodb.net/todo-hash")
 
 const app = express();
 app.use(express.json());
 
 app.post("/signup", async function(req, res) {
 
+     // Zod validation schema for the signup request body
+     const requiredBody = z.object({
+        email: z.string().min(5).max(100).email(),
+        name: z.string().min(1).max(100),
+        password: z.string().min(5).max(30)
+    });
+
+    // Validate the incoming request body
+    const safeParsedData = requiredBody.safeParse(req.body);
+
+    if (!safeParsedData.success) {
+        // If validation fails, return a response with error details
+        return res.status(400).json({
+            message: "Invalid input format",
+            errors: safeParsedData.error.errors
+        });
+    }
+    
     const email = req.body.email;
     const password = req.body.password;
     const name = req.body.name;
