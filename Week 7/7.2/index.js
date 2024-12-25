@@ -92,7 +92,7 @@ app.post("/signin", async function(req, res) {
 
         // If no user is found, prompt the user to sign up
         if (!response) {
-            res.json({ message: "Please Sign up" });
+            return res.json({ message: "Please Sign up" });
         }
         
         // Comparing the provided password with the stored hash using bcrypt
