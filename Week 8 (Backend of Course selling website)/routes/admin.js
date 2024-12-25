@@ -106,7 +106,7 @@ adminRouter.post("/course/add",async function(req,res){
         }
 
         // Create a new course
-        await CourseModel.create({
+        const course = await CourseModel.create({
             title,
             description,
             imageUrl,
@@ -115,8 +115,9 @@ adminRouter.post("/course/add",async function(req,res){
         });
 
         res.status(201).json({
-            message: "You have successfully added the course",
+            message: "You have successfully added the course", courseId : course._id
         });
+
     } catch (err) {
         res.status(500).json({
             message: "An error occurred while adding the course",
@@ -180,7 +181,7 @@ adminRouter.put("/course/update",function(req,res){
     try{
 
         const { title ,description , price,imageUrl} = req.body
-
+        
     }catch(err){
 
         res.status(500).json({
