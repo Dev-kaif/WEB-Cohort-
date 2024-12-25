@@ -162,12 +162,12 @@ adminRouter.delete("/course/delete",async function(req,res){
 
 })
 
-adminRouter.put("/course/update",function(req,res){
+adminRouter.put("/course/update",async function(req,res){
     const reqBody = z.object({
         title:z.string().max(100).min(5),
         description: z.string().max(100).min(5),
         imageUrl: z.string().max(100).min(5),
-        price: z.number().max(30).min(5)
+        price: z.number()
     })
 
     const safeParseData = reqBody.safeParse(req.body);
@@ -181,7 +181,19 @@ adminRouter.put("/course/update",function(req,res){
     try{
 
         const { title ,description , price,imageUrl} = req.body
-        
+        const _id = req.body.courseId
+        const result = await CourseModel.updateOne(
+            // expects the frist ibject to the condition or which object to update
+            { _id },{
+            title ,
+            description ,
+            price,
+            imageUrl
+        });
+        res.status(200).json({
+            message: "You have successfully updated the course",
+        });
+
     }catch(err){
 
         res.status(500).json({
@@ -190,8 +202,13 @@ adminRouter.put("/course/update",function(req,res){
     }
 })
 
-adminRouter.get("/course/bulk",function(req,res){
+adminRouter.get("/course/bulk",async function(req,res){
+    const creatorId = req.adminID;
 
+    const courses = await CourseModel.find({
+        creatorId
+    })
+    res.json({courses})
 })
 
 module.exports = {
