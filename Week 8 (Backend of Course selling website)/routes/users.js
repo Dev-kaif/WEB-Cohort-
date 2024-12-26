@@ -1,4 +1,4 @@
-const {UserModel,PurchaseModel} = require("../db");
+const {UserModel,PurchaseModel, CourseModel} = require("../db");
 const {JWT_USER_SECRET} = require("../config")
 const { userAuth } = require('../authorization/userAuth');
 
@@ -85,13 +85,17 @@ userRouter.get("/purchases", userAuth, async (req, res) => {
         return res.status(400).json({ error: "User ID is missing." });
       }
   
-      const courses = await PurchaseModel.find({ userId: req.userId });
+      const purchases = await PurchaseModel.find({ userId: req.userId });
   
-      if (!courses.length) {
+      if (!purchases.length) {
         return res.status(404).json({ message: "No purchases found for this user." });
       }
+
+      const courses = await CourseModel.find({
+        _id: {$in: purchases.map(item=>item.courseId)}
+      })
   
-      res.json({ success: true, total: courses.length, courses });
+      res.json({ success: true, total: purchases.length, purchases , courses});
     } catch (error) {
       console.error("Error fetching purchases:", error);
       res.status(500).json({ error: "An error occurred while fetching purchases." });
