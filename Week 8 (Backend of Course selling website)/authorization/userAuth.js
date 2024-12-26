@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {JWT_USER_SECRET} = require("../config")
 
-function auth(req,res,next){
+function userAuth(req,res,next){
     const token = req.headers.token;
 
     const response = jwt.verify(token,JWT_USER_SECRET)
@@ -14,4 +14,4 @@ function auth(req,res,next){
     }
 }
 
-module.exports = {auth}
+module.exports = {userAuth}
