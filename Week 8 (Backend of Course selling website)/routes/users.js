@@ -1,5 +1,6 @@
-const {UserModel} = require("../db");
+const {UserModel,PurchaseModel} = require("../db");
 const {JWT_USER_SECRET} = require("../config")
+const { userAuth } = require('../authorization/userAuth');
 
 const bcrypt = require('bcrypt');
 const saltRounds = 5;
@@ -15,8 +16,8 @@ userRouter.post("/signup",async function(req,res){
 
     const reqBody = z.object({
         email:z.string().max(100).min(5),
-        firstName : z.string().max(100).min(5),
-        lastName: z.string().max(100).min(5),
+        firstName : z.string().max(100).min(1),
+        lastName: z.string().max(100).min(1),
         password: z.string().max(30).min(5)
     })
 
@@ -76,6 +77,27 @@ userRouter.post("/signin",async function(req,res){
         res.status(403).json({message: "Incorrect credentials"});
     }
 })
+
+
+userRouter.get("/purchases", userAuth, async (req, res) => {
+    try {
+      if (!req.userId) {
+        return res.status(400).json({ error: "User ID is missing." });
+      }
+  
+      const courses = await PurchaseModel.find({ userId: req.userId });
+  
+      if (!courses.length) {
+        return res.status(404).json({ message: "No purchases found for this user." });
+      }
+  
+      res.json({ success: true, total: courses.length, courses });
+    } catch (error) {
+      console.error("Error fetching purchases:", error);
+      res.status(500).json({ error: "An error occurred while fetching purchases." });
+    }
+  });
+  
 
 module.exports = {
     userRouter
