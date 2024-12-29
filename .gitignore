@@ -1,2 +1,4 @@
 node_modules
 .env
+out 
+#out is the file which is used to save the ts to js converted file
