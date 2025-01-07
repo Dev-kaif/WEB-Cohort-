@@ -100,6 +100,8 @@ const App = () => {
     };
 
     socket.current.send(JSON.stringify(createMessage));
+    navigator.clipboard.writeText(newRoomId.toString());
+    alert(`Copied room Id: ${newRoomId}`)
     console.log(`Room ${newRoomId} created and joined.`);
   };
 
