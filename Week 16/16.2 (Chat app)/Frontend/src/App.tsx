@@ -103,9 +103,14 @@ const App = () => {
     console.log(`Room ${newRoomId} created and joined.`);
   };
 
+  const leaveRoom = ()=>{
+    setRoomId(null)
+  }
+
   return (
     <div className="bg-zinc-800 flex flex-col justify-center items-center h-screen gap-4">
       <div className="flex flex-col items-center gap-4">
+        {roomId&&<div className="flex flex-col gap-2">
         {/* Chat Messages */}
         <div className="bg-white h-96 w-80 text-black flex flex-col justify-end p-2 overflow-auto rounded-md">
           {messages.map((msg, index) => (
@@ -133,9 +138,16 @@ const App = () => {
             Send
           </button>
         </div>
+          <button
+            onClick={leaveRoom}
+            className="bg-blue-500 text-white px-3 py-1 rounded-md"
+          >
+            Leave Room
+          </button>
+        </div>}
 
         {/* Room Management Section */}
-        <div className="flex flex-col items-center bg-zinc-700 p-4 rounded-md gap-4 w-full max-w-xs">
+        {!roomId&&<div className="flex flex-col items-center bg-zinc-700 p-4 rounded-md gap-4 w-full max-w-xs">
           <div className="text-white text-sm">
             {roomId ? `Current Room ID: ${roomId}` : "No room joined yet"}
           </div>
@@ -159,7 +171,7 @@ const App = () => {
           >
             Create Room
           </button>
-        </div>
+        </div>}
       </div>
     </div>
   );
