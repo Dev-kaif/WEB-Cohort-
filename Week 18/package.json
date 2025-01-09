@@ -1,0 +1,14 @@
+{
+  "name": "week-18",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.2.1",
+    "@types/pg": "^8.11.10",
+    "pg": "^8.13.1",
+    "prisma": "^6.2.1"
+  }
+}

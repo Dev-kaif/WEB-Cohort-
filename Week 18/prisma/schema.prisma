@@ -1,0 +1,82 @@
+// Prisma Generator:
+// The `generator client` block tells Prisma which client to generate. 
+// In this case, it will generate the JavaScript client (`prisma-client-js`) for interacting with the database.
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Data Source Configuration:
+// This block configures the connection to the database.
+// - `provider` specifies the type of database (e.g., PostgreSQL in this case).
+// - `url` is fetched from an environment variable `DATABASE_URL` to keep credentials secure.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Prisma Initialization and Migrations:
+// - To initialize a Prisma setup, run: `npx prisma init`
+//   This creates the necessary configuration files (`schema.prisma`).
+// - After making any changes to the schema, use `npx prisma migrate dev` to:
+//   1. Generate a new migration file reflecting the schema changes.
+//   2. Apply the changes to the database.
+//   3. Update the Prisma Client to match the latest schema changes.
+
+model User {
+  // - `@id` marks `id` as the primary key in Prisma.
+  // - `@default(autoincrement())` generates a unique sequential ID automatically for each new entry.
+  id        Int    @id @default(autoincrement())
+
+  // - `@unique` ensures that no two users can have the same username.
+  username  String @unique
+  password  String
+  age       Int
+}
+
+model Todo {
+  id              Int      @id @default(autoincrement())
+  title           String
+  description     String
+  done            Boolean
+
+  // Foreign Key Relationship:
+  // - `userId` is the foreign key linking each `Todo` entry to a specific `User`.
+  userId          Int
+
+  // Default Value and Optional Field Example:
+  // - If a new field like `time` is added after data already exists in the database:
+  //   1. Existing rows will have `NULL` values for this field unless a default value is provided.
+  //   2. To avoid issues with existing data, you can:
+  //      a. Make the field optional by appending `?` (e.g., `time? DateTime`).
+  //      b. Set a default value (e.g., `@default(now())`), which will automatically populate the field for new entries.
+  time            DateTime @default(now())
+}
+
+/* 
+**Learnings:**
+1. **Prisma Workflow:**
+   - Use `npx prisma init` to set up your Prisma environment.
+   - Use `npx prisma migrate dev` to synchronize schema changes with the database.
+   - Always update the Prisma Client after schema changes to reflect the latest database structure.
+
+2. **Primary Keys and Constraints:**
+   - `@id` defines the primary key.
+   - Constraints like `@unique` ensure data integrity (e.g., no duplicate usernames).
+
+3. **Field Defaults and Optionality:**
+   - Use `@default` to assign default values (e.g., `@default(now())` for timestamps).
+   - Use `?` to make fields optional, allowing `NULL` values for existing records.
+
+4. **Database Relationships:**
+   - Foreign keys (e.g., `userId`) are used to establish relationships between tables.
+
+5. **Schema Updates with Existing Data:**
+   - Adding new fields to an existing database requires handling `NULL` values or providing defaults to avoid issues.
+   - Always think about how new fields impact existing data.
+
+6. **Best Practices:**
+   - Use environment variables (`env()`) to manage sensitive database credentials securely.
+   - Run migrations consistently to maintain schema and data consistency.
+
+By following these learnings, you can efficiently manage and scale your Prisma-based database.
+*/
