@@ -14,33 +14,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Prisma Initialization and Migrations:
+// Prisma Initialization, Migrations, and Client Generation:
+
 // - To initialize a Prisma setup, run: `npx prisma init`
 //   This creates the necessary configuration files (`schema.prisma`).
+
 // - After making any changes to the schema, use `npx prisma migrate dev` to:
 //   1. Generate a new migration file reflecting the schema changes.
 //   2. Apply the changes to the database.
 //   3. Update the Prisma Client to match the latest schema changes.
 
+// - To regenerate the Prisma Client (e.g., after changing the schema without running a migration), run: `npx prisma generate`
+//   1. This regenerates the TypeScript/JavaScript Prisma Client based on the current schema.
+//   2. This is required if you add or modify models, fields, or relationships to reflect those changes in your application.
+
 model User {
+  // Primary Key:
   // - `@id` marks `id` as the primary key in Prisma.
   // - `@default(autoincrement())` generates a unique sequential ID automatically for each new entry.
   id        Int    @id @default(autoincrement())
 
+  // Unique Constraint:
   // - `@unique` ensures that no two users can have the same username.
   username  String @unique
+
   password  String
   age       Int
+
+  // One-to-Many Relationship:
+  // - The `todos` field establishes a one-to-many relationship between the `User` and `Todo` models.
+  // - Each user can have multiple todos, represented as an array of `Todo`.
+  todos     Todo[]
 }
 
 model Todo {
+  // Primary Key:
   id              Int      @id @default(autoincrement())
+
   title           String
   description     String
   done            Boolean
 
-  // Foreign Key Relationship:
-  // - `userId` is the foreign key linking each `Todo` entry to a specific `User`.
+  // Foreign Key Field:
+  // - `userId` serves as the foreign key linking this model to the `User` model.
   userId          Int
 
   // Default Value and Optional Field Example:
@@ -50,33 +66,52 @@ model Todo {
   //      a. Make the field optional by appending `?` (e.g., `time? DateTime`).
   //      b. Set a default value (e.g., `@default(now())`), which will automatically populate the field for new entries.
   time            DateTime @default(now())
+
+  // Relationship:
+  // - The `user` field establishes the connection with the `User` model.
+  // - The `@relation` attribute explicitly defines how the `userId` field references the `id` field in the `User` model.
+  user            User  @relation(fields: [userId], references: [id])
 }
 
-/* 
-**Learnings:**
-1. **Prisma Workflow:**
-   - Use `npx prisma init` to set up your Prisma environment.
-   - Use `npx prisma migrate dev` to synchronize schema changes with the database.
-   - Always update the Prisma Client after schema changes to reflect the latest database structure.
+// **Learnings:**
+// 1. **Prisma Workflow:**
+//    - Use `npx prisma init` to set up your Prisma environment.
+//    - Use `npx prisma migrate dev` to synchronize schema changes with the database.
+//    - Use `npx prisma generate` to regenerate the Prisma Client when the schema is updated but no migrations are applied.
 
-2. **Primary Keys and Constraints:**
-   - `@id` defines the primary key.
-   - Constraints like `@unique` ensure data integrity (e.g., no duplicate usernames).
+// 2. **Primary Keys and Constraints:**
+//    - `@id` defines the primary key.
+//    - Constraints like `@unique` ensure data integrity (e.g., no duplicate usernames).
 
-3. **Field Defaults and Optionality:**
-   - Use `@default` to assign default values (e.g., `@default(now())` for timestamps).
-   - Use `?` to make fields optional, allowing `NULL` values for existing records.
+// 3. **Field Defaults and Optionality:**
+//    - Use `@default` to assign default values (e.g., `@default(now())` for timestamps).
+//    - Use `?` to make fields optional, allowing `NULL` values for existing records.
 
-4. **Database Relationships:**
-   - Foreign keys (e.g., `userId`) are used to establish relationships between tables.
+// 4. **Database Relationships:**
+//    - **One-to-Many Relationship:** 
+//      - A `User` can have multiple `Todo` items. This is represented by the `todos` field in the `User` model.
+//    - **Foreign Keys and Relations:**
+//      - The `userId` field in the `Todo` model is a foreign key referencing the `id` field in the `User` model.
+//      - Relationships are explicitly defined using the `@relation` attribute to ensure proper linkage between tables.
 
-5. **Schema Updates with Existing Data:**
-   - Adding new fields to an existing database requires handling `NULL` values or providing defaults to avoid issues.
-   - Always think about how new fields impact existing data.
+// 5. **Schema Updates with Existing Data:**
+//    - Adding new fields to an existing database requires handling `NULL` values or providing defaults to avoid issues.
+//    - Always think about how new fields impact existing data.
 
-6. **Best Practices:**
-   - Use environment variables (`env()`) to manage sensitive database credentials securely.
-   - Run migrations consistently to maintain schema and data consistency.
+// 6. **Prisma Client Regeneration:**
+//    - The Prisma Client needs to be regenerated (`npx prisma generate`) if you make schema changes like:
+//      - Adding/Removing models.
+//      - Modifying fields or relationships in existing models.
+//      - Changing the database connection URL.
+//    - Without regeneration, the application will not recognize the latest schema changes.
 
-By following these learnings, you can efficiently manage and scale your Prisma-based database.
-*/
+// 7. **Best Practices:**
+//    - Use environment variables (`env()`) to manage sensitive database credentials securely.
+//    - Run migrations and generate the Prisma Client consistently to ensure schema and code alignment.
+//    - Test schema updates thoroughly to prevent data loss or inconsistencies.
+
+// 8. **New Learnings:**
+//    - Relationships are a core feature of Prisma that simplify handling database joins. 
+//    - Explicitly defining relationships using `@relation` improves schema clarity and ensures referential integrity.
+//    - One-to-Many relationships are common and allow a parent (e.g., `User`) to own multiple child records (e.g., `Todo`).
+//    - Prisma automatically enforces cascading updates or restrictions based on the defined relationships, reducing manual error handling.
