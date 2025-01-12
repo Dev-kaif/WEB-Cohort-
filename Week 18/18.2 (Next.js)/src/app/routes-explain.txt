@@ -1,0 +1,14 @@
+pages/
+├── (auth)/
+│   ├── login/
+│   │   └── page.tsx       // Route: /login
+│   └── signup/
+│       └── page.tsx       // Route: /signup
+├── product/
+│   ├── [id].tsx           // Route: /product/123
+│   └── reviews/
+│       └── [reviewId].tsx // Route: /product/reviews/456
+├── blog/
+│   ├── [...slug].tsx      // Route: /blog/post/2023, /blog/category/post
+│   └── index.tsx          // Route: /blog
+└── index.tsx              // Route: /
