@@ -27,7 +27,7 @@ async function page() {
             <div className="flex gap-2">
               {/* use links to naviagte in the next app */}
               <Link className="bg-blue-500 px-2 py-1 rounded-full " href={'/signup'}>Sign up</Link>
-              <Link className="bg-blue-500 px-2 py-1 rounded-full " href={'/signin'}>Sign up</Link>
+              <Link className="bg-blue-500 px-2 py-1 rounded-full " href={'/signin'}>Sign in</Link>
             </div>
         </div>
     </div>
