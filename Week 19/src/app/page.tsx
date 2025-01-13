@@ -1,4 +1,5 @@
 import axios from "axios";
+import Link from "next/link";
 
 // Function to fetch data from the API
 async function getData() {
@@ -13,7 +14,7 @@ async function page() {
 
   return (
     <div className="flex flex-col justify-center h-screen">
-        <div className="flex justify-center">
+        <div className="flex justify-center flex-col items-center gap-5">
             <div className="border p-8 rounded">
                 <div>
                     {/* Displaying fetched data */}
@@ -22,6 +23,11 @@ async function page() {
                 <div>
                     Email: {CardData?.email}
                 </div>
+            </div>
+            <div className="flex gap-2">
+              {/* use links to naviagte in the next app */}
+              <Link className="bg-blue-500 px-2 py-1 rounded-full " href={'/signup'}>Sign up</Link>
+              <Link className="bg-blue-500 px-2 py-1 rounded-full " href={'/signin'}>Sign up</Link>
             </div>
         </div>
     </div>
