@@ -58,9 +58,4 @@ export function GET() {
  *    - Keep logic minimal in route handlers. For complex operations, delegate to helper functions or services.
  *    - Use environment variables for sensitive data like API keys or database URLs.
  *    - Handle errors gracefully using `try-catch` blocks and return appropriate HTTP status codes (e.g., `400`, `500`).
- * 
- * 7. **Dynamic Routes**:
- *    - You can create dynamic routes by naming the file or folder with square brackets.
- *      Example: `app/api/user/[id]/route.ts` maps to `/api/user/:id`.
- *    - Access the dynamic segment (`id`) from the request object.
  */
