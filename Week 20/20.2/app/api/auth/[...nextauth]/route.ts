@@ -28,29 +28,32 @@ const handler = NextAuth({
           name: "Random name", 
           email: "Random@gmail.com", 
           username: "random", 
-          password: "random"
+          password: "random" 
         }
 
-        // If user is found, return the user object, else return null (authentication fails)
+        // If user is found, return the user object; otherwise, authentication fails
         if (user) {
-          return user // Successful login
+          return user; 
         }
-        return null // Failed login
+        return null; 
       }
     }),
 
     // Google authentication provider (allows users to log in using their Google account)
     GoogleProvider({
-      clientId: "process.env.GOOGLE_CLIENT_ID", // Using environment variable for Google Client ID
-      clientSecret: "process.env.GOOGLE_CLIENT_SECRET" // Using environment variable for Google Client Secret
+      clientId: "process.env.GOOGLE_CLIENT_ID", 
+      clientSecret: "process.env.GOOGLE_CLIENT_SECRET" 
     }),
 
     // Instagram authentication provider (allows users to log in using their Instagram account)
     InstagramProvider({
-      clientId: process.env.INSTAGRAM_CLIENT_ID, // Using environment variable for Instagram Client ID
-      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET // Using environment variable for Instagram Client Secret
+      clientId: process.env.INSTAGRAM_CLIENT_ID,
+      clientSecret: process.env.INSTAGRAM_CLIENT_SECRET 
     })
-  ]
+  ],
+
+  // Secret used to sign and encrypt JWT tokens and manage session-related cryptography
+  secret: process.env.AUTH_SECRET
 })
 
 // Exporting the NextAuth handler for both GET and POST methods to be used in API routes
@@ -58,13 +61,23 @@ export { handler as GET, handler as POST }
 
 /*
  Key Learnings:
-  1. **Authentication Providers**: Different methods of authentication (Credentials, Google, Instagram) can be integrated in a Next.js app using NextAuth.
+  1. **Authentication Providers**: 
+     NextAuth allows integration of multiple authentication providers, including Credentials (custom login with username/password), Google, and Instagram.
 
-  2. **CredentialsProvider**: Handles username/password-based authentication, with the flexibility to connect to a database for real-world use cases. Passwords should be hashed securely in practice.
+  2. **CredentialsProvider**: 
+     - Handles username/password authentication. 
+     - Useful for custom login flows that involve database validation. 
+     - In production, always hash and securely compare passwords (e.g., using bcrypt or a similar library).
 
-  3. **Environment Variables**: Sensitive information like API keys (clientId, clientSecret) for providers should be stored in environment variables for security purposes, preventing exposure in the codebase.
+  3. **Environment Variables**: 
+     Sensitive values such as `clientId`, `clientSecret`, and `AUTH_SECRET` should be stored in `.env` files. These are never exposed to the client, ensuring security and avoiding hardcoding secrets in the codebase.
 
-  4. **Asynchronous Authorization**: The `authorize` function is async, which is useful when you need to interact with external services (e.g., databases or APIs) for authentication logic.
-  
-  5. **NextAuth Configuration**: You can easily add or remove authentication providers by modifying the `providers` array, making it highly customizable for different login methods.
+  4. **NextAuth Secret** (`secret`): 
+     - The `secret` property is crucial for cryptographic operations such as signing and encrypting JSON Web Tokens (JWT) and cookies.
+     - This ensures that session data and tokens are securely managed and tamper-proof.
+     - It must be defined using an environment variable (`AUTH_SECRET`) and should be a long, random string for security.
+
+
+  5. **Session Management**: 
+     NextAuth abstracts session handling, making it easier to manage user authentication and protect sensitive routes in the application.
 */
