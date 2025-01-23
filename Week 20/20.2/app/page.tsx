@@ -2,6 +2,7 @@
 'use client'
 
 import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 // Main component: Wraps the app with a session provider to enable authentication features.
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
 // Component for rendering session-based UI and logic
 function RealHome() {
   const session = useSession(); // Fetches the session status and user data.
+  const router = useRouter()
 
   const containerStyle = {
     display: 'flex',
@@ -24,21 +26,27 @@ function RealHome() {
     height: '100vh',
     backgroundColor: '#121212', 
     color: '#ffffff',
+    flexDirection: 'column',
+    gap:'2vw'
   };
 
   return (
     <div style={containerStyle}>
+       <div>
+        {JSON.stringify(session)}
+      </div>
       {/* Displays "Logout" button if the user is logged in */}
       {session.status === "authenticated" && (
+        <>
         <Button text="Logout" func={() => signOut()} />
+        <Button text={'getServer'} func={()=>{ router.push('/getserver')}}/>
+        </>
       )}
 
       {/* Displays "Sign In" button if the user is not logged in */}
       {session.status === "unauthenticated" && (
         <Button text="Sign In" func={() => signIn()} />
       )}
-
-      {JSON.stringify(session)}
     </div>
   );
 }
