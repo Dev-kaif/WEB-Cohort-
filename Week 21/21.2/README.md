@@ -1,84 +1,149 @@
-# Turborepo starter
+# Turbo Repo
 
-This Turborepo starter is maintained by the Turborepo core team.
+## Introduction
+Turbo Repo is a **monorepo framework** or **build orchestrator** that efficiently manages and organizes the sequence of builds within a monorepo. It optimizes the build process by caching previously built files and only rebuilding the files that have changed. This makes it highly efficient for **CI/CD pipelines** by reducing redundant work and speeding up deployments.
 
-## Using this example
+## Features
+- 🚀 **Efficient Build Caching**: Turbo Repo caches builds and only rebuilds changed files.
+- 🏗 **Monorepo Support**: Manages multiple projects within a single repository.
+- 🔄 **Shared Configurations**: Centralized TypeScript, ESLint, and other configurations.
+- 🎨 **Reusable UI Components**: Export and reuse components across multiple applications.
 
-Run the following command:
+## Monorepo File Structure
+A typical **Turbo Repo** project follows this structure:
 
 ```sh
-npx create-turbo@latest
+root-folder/
+├── apps/
+│   ├── web/
+│   ├── docs/
+├── packages/
+│   ├── eslint-config/
+│   ├── typescript-config/
+│   ├── ui/
 ```
 
-## What's inside?
+### Explanation:
+- **`apps/`**: Contains multiple frontend and backend applications.
+- **`packages/`**: Contains shared configurations and libraries, such as:
+  - `eslint-config`: Shared ESLint rules.
+  - `typescript-config`: Shared TypeScript configuration.
+  - `ui`: A reusable UI component library.
 
-This Turborepo includes the following packages/apps:
+## Workspaces in Turbo Repo
+Turbo Repo uses **Yarn/PNPM/NPM workspaces** to manage multiple packages within the monorepo. These are defined in the `package.json` file under the `workspaces` key:
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+```json
+"workspaces": [
+    "apps/*",
+    "packages/*"
+]
 ```
 
-### Develop
+Here, `*` acts as a wildcard to include all folders inside `apps` and `packages` as separate workspaces.
 
-To develop all apps and packages, run the following command:
+## UI Library & Component Exports
+The **UI package (`packages/ui`)** contains reusable UI components that are exported for use in different applications within the monorepo.
 
-```
-cd my-turborepo
-pnpm dev
-```
+### How Export Works:
+In the `packages/ui/package.json` file, we use the `exports` object to define component exports:
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```json
+"exports": {
+    "./button": "./src/button.tsx",
+    "./card": "./src/card.tsx",
+    "./code": "./src/code.tsx",
+    "./input": "./src/input.tsx"
+}
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+### Importing Components:
+Any workspace can import these components like this:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
+```ts
+import { Button } from "@repo/ui/button";
 ```
-npx turbo link
+
+This structure ensures modularity and maintainability across the monorepo.
+
+## Managing Multiple Servers
+The **`apps` workspace** contains multiple frontend and backend applications. In our case, we created **two backend servers** (`server` and `server2`) and used a shared TypeScript configuration to keep their settings consistent.
+
+### Shared TypeScript Configuration (`packages/typescript-config`)
+Instead of duplicating `tsconfig.json` in every server, we created a shared `backend.json` inside `packages/typescript-config`:
+
+```json
+{
+    "compilerOptions": {
+      "target": "es2016",                                 
+      "module": "commonjs",
+      "esModuleInterop": true,                             
+      "forceConsistentCasingInFileNames": true,            
+      "strict": true,                                     
+     "skipLibCheck": true                                
+    }
+  }
 ```
 
-## Useful Links
+### Extending Shared Configuration in Servers
+Each server then extends this shared configuration in its own `tsconfig.json`:
 
-Learn more about the power of Turborepo:
+```json
+{
+  "extends": "@repo/typescript-config/backend.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist"
+  }
+}
+```
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+**Why Override `rootDir` and `outDir`?**
+- The shared config alone does not work because `rootDir` and `outDir` are relative paths.
+- If defined globally, TypeScript would look for `src/` and `dist/` in the `packages/typescript-config` folder instead of the actual server folder.
+- Overriding these values ensures that the build process works correctly per server.
+
+## Understanding `turbo.json`
+Turbo Repo allows task optimization using `turbo.json`. Here’s a typical example:
+
+```json
+"tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    }
+}
+```
+
+### Explanation:
+- **`dependsOn`**: Defines task dependencies (`^build` ensures parent dependencies build first).
+- **`inputs`**: Specifies files required before starting the build.
+- **`outputs`**: Specifies cached files for future builds.
+  - `!` before `.next/cache/**` means this folder **should not** be cached.
+
+## Overriding `turbo.json` for Servers
+Since `turbo.json` is global, we may need to override configurations for specific servers. This can be done by creating a **local `turbo.json`** inside the server’s folder and extending the main one:
+
+```json
+{
+    "extends": ["../../turbo.json"],
+    "tasks": {
+        "build": {
+            "outputs": ["dist/**"]
+        }
+    }
+}
+```
+
+This ensures that the `dist/` folder is cached properly for backend builds.
+
+## Summary of Learnings
+✅ **Turbo Repo is a build orchestrator** that speeds up monorepo development with caching and task scheduling.
+✅ **Workspaces** allow multiple applications and packages to coexist efficiently.
+✅ **Shared configurations (TypeScript, ESLint, etc.)** improve maintainability.
+✅ **UI components can be shared across applications** using the `exports` field.
+✅ **Overrides in `tsconfig.json` and `turbo.json` are necessary** for correct builds in individual applications.
+
+This structured approach ensures **scalability, reusability, and performance** in a monorepo setup. 🚀
+
