@@ -7,6 +7,7 @@ Turbo Repo is a **monorepo framework** or **build orchestrator** that efficientl
 - 🚀 **Efficient Build Caching**: Turbo Repo caches builds and only rebuilds changed files.
 - 🏗 **Monorepo Support**: Manages multiple projects within a single repository.
 - 🔄 **Shared Configurations**: Centralized TypeScript, ESLint, and other configurations.
+- 📦 **Dependency Hoisting**: Shared dependencies are installed at the root level, reducing duplication.
 - 🎨 **Reusable UI Components**: Export and reuse components across multiple applications.
 
 ## Monorepo File Structure
@@ -140,9 +141,15 @@ This ensures that the `dist/` folder is cached properly for backend builds.
 
 ## Summary of Learnings
 ✅ **Turbo Repo is a build orchestrator** that speeds up monorepo development with caching and task scheduling.
+
 ✅ **Workspaces** allow multiple applications and packages to coexist efficiently.
+
 ✅ **Shared configurations (TypeScript, ESLint, etc.)** improve maintainability.
+
 ✅ **UI components can be shared across applications** using the `exports` field.
+
+✅ Dependency hoisting optimizes node_modules by installing shared dependencies at the root level.
+
 ✅ **Overrides in `tsconfig.json` and `turbo.json` are necessary** for correct builds in individual applications.
 
 This structured approach ensures **scalability, reusability, and performance** in a monorepo setup. 🚀
