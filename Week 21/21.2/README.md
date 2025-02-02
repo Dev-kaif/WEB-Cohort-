@@ -3,6 +3,8 @@
 ## Introduction
 Turbo Repo is a **monorepo framework** or **build orchestrator** that efficiently manages and organizes the sequence of builds within a monorepo. It optimizes the build process by caching previously built files and only rebuilding the files that have changed. This makes it highly efficient for **CI/CD pipelines** by reducing redundant work and speeding up deployments.
 
+to Run with tailwind : npx create-turbo@latest -e with-tailwind
+
 ## Features
 - 🚀 **Efficient Build Caching**: Turbo Repo caches builds and only rebuilds changed files.
 - 🏗 **Monorepo Support**: Manages multiple projects within a single repository.
